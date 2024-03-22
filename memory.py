@@ -19,6 +19,7 @@ tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
 contador_taps = 0
+mensaje_ganador = "¡Felicidades, eres el ganador!"
 
 def square(x, y):
     """Draw white square with black outline at (x, y)."""
@@ -65,6 +66,8 @@ def contador():
     write(f"Contador de taps: {contador_taps}", font = ('Arial', 30, 'normal'))
 
 
+def ganador():
+    return all(not h for h in hide)
 
 
 def draw():
@@ -89,6 +92,11 @@ def draw():
         goto(x + 2, y)
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
+    if ganador():
+        up()
+        goto(-100,0)
+        color('green')
+        write(mensaje_ganador, font = ('Arial', 40, 'normal'), align = 'center')
 
 
     update()
