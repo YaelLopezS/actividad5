@@ -11,43 +11,42 @@ Exercises:
 
 from random import *
 from turtle import *
-
 from freegames import path
 
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
-contador_taps = 0
-mensaje_ganador = "¡Felicidades, eres el ganador!"
 
-def square(x, y):
-    """Draw white square with black outline at (x, y)."""
+def square(x, y, tile_num):
+    "Draw colored square with black outline at (x, y)."
     up()
     goto(x, y)
     down()
-    color('black', 'white')
+    color('black')
+
+    # Assign a color based on the tile number
+    colors = ["red", "green", "blue", "orange", "yellow", "purple", "pink", "cyan"]
+    color_index = tile_num % len(colors)
+    fillcolor(colors[color_index])
+
     begin_fill()
-    for count in range(4):
+    for _ in range(4):
         forward(50)
         left(90)
     end_fill()
 
 
 def index(x, y):
-    """Convert (x, y) coordinates to tiles index."""
+    "Convert (x, y) coordinates to tiles index."
     return int((x + 200) // 50 + ((y + 200) // 50) * 8)
 
-
 def xy(count):
-    """Convert tiles count to (x, y) coordinates."""
+    "Convert tiles count to (x, y) coordinates."
     return (count % 8) * 50 - 200, (count // 8) * 50 - 200
 
-
 def tap(x, y):
-    """Update mark and hidden tiles based on tap."""
-    global contador_taps
-    contador_taps += 1
+    "Update mark and hidden tiles based on tap."
     spot = index(x, y)
     mark = state['mark']
 
@@ -58,22 +57,18 @@ def tap(x, y):
         hide[mark] = False
         state['mark'] = None
 
-def contador():
-    up()
-    goto(0,200)
-    color('black')
-    clear()
-    write(f"Contador de taps: {contador_taps}", font = ('Arial', 30, 'normal'))
-
-
-def ganador():
-    return all(not h for h in hide)
+    # Center the text
+    if state['mark'] is not None and hide[state['mark']]:
+        x, y = xy(state['mark'])
+        up()
+        goto(x + 25, y + 12)  # Adjusted coordinates for centering
+        color('black')
+        write(tiles[state['mark']], align='center', font=('Arial', 30, 'normal'))
 
 
 def draw():
-    """Draw image and tiles."""
+    "Draw image and tiles."
     clear()
-    contador()
     goto(0, 0)
     shape(car)
     stamp()
@@ -81,10 +76,9 @@ def draw():
     for count in range(64):
         if hide[count]:
             x, y = xy(count)
-            square(x, y)
+            square(x, y, tiles[count])  # Pass the tile number to square function
 
     mark = state['mark']
-
 
     if mark is not None and hide[mark]:
         x, y = xy(mark)
@@ -92,16 +86,9 @@ def draw():
         goto(x + 2, y)
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
-    if ganador():
-        up()
-        goto(-100,0)
-        color('green')
-        write(mensaje_ganador, font = ('Arial', 40, 'normal'), align = 'center')
-
 
     update()
     ontimer(draw, 100)
-
 
 shuffle(tiles)
 setup(420, 420, 370, 0)
@@ -111,4 +98,3 @@ tracer(False)
 onscreenclick(tap)
 draw()
 done()
-
