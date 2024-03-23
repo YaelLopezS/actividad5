@@ -7,9 +7,9 @@ Este código en Python utiliza la biblioteca Turtle para crear un juego de memor
 
 ## Funcionalidades
 
-- square(x,y): Dibuja un cuadrado blanco con borde negro en las coordenadas.
+- square(x,y): Dibuja un cuadrado blanco con borde negro en las coordenadas y selecciona el color basado en el número de azulejo proporcionado.
 - index(x,y): Convierte las coordenadas (x, y) en un índice de ficha.
-- tap(x,y): Convierte las coordenadas (x, y) en un índice de ficha.
+- tap(x,y): Convierte las coordenadas (x, y) en un índice de ficha. Actualiza el marcado y muestra los azulejos ocultos según la posición de clic, permitiendo revelar o mantener marcados los azulejos correspondientes y escribir el valor del azulejo en el centro si está marcado y aún está oculto.
 - draw(): Dibuja la imagen y las fichas en la pantalla, actualizando continuamente el juego.
 
 ## Interacciones
@@ -20,4 +20,4 @@ Este código en Python utiliza la biblioteca Turtle para crear un juego de memor
 - Al desbloquear todas las fichas el jugador gana.
 
 ## Autores
-- [@YaelLopezS](https://github.com/YaelLopezS)
+- [@Toromanu2429](https://github.com/ Toromanu2429)
